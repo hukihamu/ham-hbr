@@ -3,3 +3,5 @@ node_modules
 .clasp.json
 frontend/node_modules
 dist
+/backend/src/env.json
+/shared/tsconfig.tsbuildinfo
