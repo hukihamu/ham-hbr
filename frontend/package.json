@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "vite --force",
+    "build": "vite build",
+    "build-dev": "vite build --mode development",
+    "build:watch": "vite build --watch"
+  },
+  "devDependencies": {
+    "@ham-vue3-gas/shared": "file:../shared",
+
+    "vue": "^3.4.5",
+    "vue-router": "^4.2.5",
+
+    "pinia": "^2.1.7",
+    "vuetify": "^3.4.9",
+    "dexie": "^3.2.4",
+    "vuedraggable": "^4.1.0",
+    "sortablejs": "^1.14.0",
+
+    "vite": "^5.0.10",
+    "@vitejs/plugin-vue": "^5.0.2",
+    "vite-plugin-vuetify": "^2.0.1",
+    "vite-plugin-singlefile": "^0.13.5"
+  }
+}
