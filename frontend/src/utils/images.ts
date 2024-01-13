@@ -23,6 +23,9 @@ export const images = {
     },
     orbIcon(orb: string) {
         return `https://hbr.quest/hbr/${orb}.webp`
+    },
+    teamIcon(team: string) {
+        return `https://hbr.quest/ui/${team.toLowerCase().replace(' ', '')}.webp`
     }
     // https://hbr.quest/g/RKayamoriProfile.webp?34
 }

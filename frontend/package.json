@@ -13,6 +13,7 @@
     "vue-router": "^4.2.5",
 
     "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1",
     "vuetify": "^3.4.9",
     "dexie": "^3.2.4",
     "vuedraggable": "^4.1.0",

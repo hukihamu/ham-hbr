@@ -1,14 +1,12 @@
-import {AsyncScriptType} from 'ham-vue3-gas/gas'
+import {AsyncScriptType, spreadsheetCache} from 'ham-vue3-gas/gas'
 import {Scripts} from '@ham-vue3-gas/shared'
-
-export const properties = PropertiesService.getScriptProperties().getProperties()
+import env from '@/env.json'
 
 export const CACHE_KEY = {
     STYLES: 1,
     CHARACTERS: 2,
     SKILLS: 3,
     PASSIVES: 4,
-    USERS: 5,
 }
 export const NOTION_KEY = {
     STYLES: '01787c6e41494170bb82a84084bf61ed',
@@ -23,3 +21,4 @@ export function isDev(): boolean {
     return !!ScriptApp.getService().getUrl().match(/dev$/)
 }
 
+export const cache = spreadsheetCache(env.cacheId, SpreadsheetApp)

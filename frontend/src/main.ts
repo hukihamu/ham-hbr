@@ -2,12 +2,13 @@ import { createApp } from 'vue'
 import {createVuetify} from 'vuetify'
 import Default from '@/layouts/default.vue'
 import {createPinia} from 'pinia'
+import {createPersistedState} from 'pinia-plugin-persistedstate'
 import {router} from '@/router.ts'
 import {errorHandlingPlugin} from '@/errorHandlingPlugin.ts'
 
 createApp(Default)
     .use(router)
-    .use(createPinia())
+    .use(createPinia().use(createPersistedState()))
     .use(createVuetify())
     .use(errorHandlingPlugin)
     .mount('#app')

@@ -1,32 +1,34 @@
-<script setup lang="ts">
-import {scripts, useStore} from '@/store.ts'
+<script lang="ts" setup>
+import {useStorageStore, useStore} from '@/store.ts'
 import {storeToRefs} from 'pinia'
+import {scripts} from '@/scripts.ts'
+import {useTheme} from 'vuetify'
 
-const {characters, user, styles} = storeToRefs(useStore())
-scripts.send('getCharacters').then(it => {
-  characters.value = it
+const {isAdmin} = storeToRefs(useStore())
+scripts.send('isAdmin').then(it => {
+  isAdmin.value = it
 })
-scripts.send('getStyles').then(it => {
-  styles.value = it
-})
-scripts.send('getUserData').then(it => {
-  user.value = it
-})
+const vTheme = useTheme()
+const {theme} = storeToRefs(useStorageStore())
+vTheme.global.name.value = theme.value
+
+function toggleTheme() {
+  theme.value = vTheme.global.current.value.dark ? 'light' : 'dark'
+  vTheme.global.name.value = theme.value
+}
 </script>
-
 <template>
-<v-app>
-  <v-navigation-drawer permanent expand-on-hover rail>
-    <v-list-item to="/" title="index" prepend-icon="mdi-home"></v-list-item>
-    <v-list-item to="/styles" title="スタイル" prepend-icon="mdi-palette-swatch"></v-list-item>
-    <v-list-item to="/user" title="ユーザ" prepend-icon="mdi-account"></v-list-item>
-  </v-navigation-drawer>
-  <v-main>
-    <router-view />
-  </v-main>
-</v-app>
+  <v-app>
+    <v-navigation-drawer permanent expand-on-hover rail class="py-3">
+      <v-list-item to="/" title="index" prepend-icon="mdi-home"/>
+      <v-list-item to="/styles" title="スタイル" prepend-icon="mdi-palette-swatch"/>
+      <v-list-item to="/user" title="ユーザ" prepend-icon="mdi-account"/>
+      <template #append>
+        <v-list-item @click="toggleTheme" title="テーマ切り替え" prepend-icon="mdi-theme-light-dark"/>
+      </template>
+    </v-navigation-drawer>
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
-
-<style scoped>
-
-</style>
