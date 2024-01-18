@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {storeToRefs} from 'pinia'
-import {useStorageStore, useStore} from '@/store.ts'
-import {images} from '@/utils/images.ts'
+import {useStorageStore, useStore} from '@/store'
+import {images} from '@/utils/images'
 import {computed} from 'vue'
 import {Style} from '@ham-vue3-gas/shared'
 

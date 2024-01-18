@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia'
-import {Character, Passive, Skill, Style, StyleType} from '@ham-vue3-gas/shared'
-import {scripts} from '@/scripts.ts'
+import {Accessory, Character, Event, Passive, Skill, Style, StyleType, Chapter, ChapterImages} from '@ham-vue3-gas/shared'
+import {scripts} from '@/scripts'
 
 export const useStore = defineStore('store', {
   state: () => ({
@@ -8,10 +8,14 @@ export const useStore = defineStore('store', {
     characters: <Character[]>[],
     passives: <Passive[]>[],
     skills: <Skill[]>[],
+    orb: <Accessory[]>[],
+    souls: <Accessory[]>[],
+    events: <Event[]>[],
+    chapters: <{chapters: Chapter[], chapterImages: ChapterImages}>{},
     isAdmin: false,
   }),
   actions: {
-    init(...options: ('styles' | 'characters' | 'passives' | 'skills')[]) {
+    init(...options: ('styles' | 'characters' | 'passives' | 'skills' | 'orb' | 'souls' | 'events' | 'chapters')[]) {
       new Set(options).forEach(it => {
         switch (it) {
           case 'characters':
@@ -42,6 +46,34 @@ export const useStore = defineStore('store', {
               })
             }
             break
+          case 'orb':
+            if (!this.orb.length) {
+              scripts.send('getOrb').then(it => {
+                this.orb = it
+              })
+            }
+            break
+          case 'events':
+            if (!this.events.length) {
+              scripts.send('getEvents').then(it => {
+                this.events = it
+              })
+            }
+            break
+          case 'souls':
+            if (!this.souls.length) {
+              scripts.send('getSouls').then(it => {
+                this.souls = it
+              })
+            }
+            break
+          case 'chapters':
+            if (!this.chapters.chapters) {
+              scripts.send('getChapters').then(it => {
+                this.chapters = it
+              })
+            }
+            break
         }
       })
     }
@@ -58,6 +90,11 @@ export const useStorageStore = defineStore('localStorage', {
     lb4: new Array<number>(),
     lb5: new Array<number>(),
     lb6: new Array<number>(),
+    generalizeProgress: new Array<number>(),
+    generalizeDone: new Array<number>(),
+    growthProgress: new Array<number>(),
+    growthDone: new Array<number>(),
+    storiesDone: new Array<number>(),
     theme: 'light',
     userState: {
       tab: '',

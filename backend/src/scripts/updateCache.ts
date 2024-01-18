@@ -1,5 +1,6 @@
 import {cache, CACHE_KEY, isDev, WrapperScriptType} from '@/utils'
-import {Character, Passive, Skill, Style} from '@ham-vue3-gas/shared'
+import {Accessory, Character, Passive, Skill, Style, Event} from '@ham-vue3-gas/shared'
+import {RawAccessory} from '@/types/rawAccessory'
 
 export const updateCache: WrapperScriptType['updateCache'] = async () => {
   if (!isDev()) {
@@ -12,10 +13,15 @@ export const updateCache: WrapperScriptType['updateCache'] = async () => {
     skills,
   } = convertStyles(JSON.parse(UrlFetchApp.fetch('https://dissidiadb-cbde0.appspot.com.storage.googleapis.com/hbr/styles.json').getContentText()))
 
+  const {orb, soul} = convertAccessories(JSON.parse(UrlFetchApp.fetch('https://dissidiadb-cbde0.appspot.com.storage.googleapis.com/hbr/accessories.json').getContentText()))
+  const events = convertEvents(JSON.parse(UrlFetchApp.fetch('https://dissidiadb-cbde0.appspot.com.storage.googleapis.com/hbr/events.json').getContentText()))
   cache.set(CACHE_KEY.STYLES, styles)
   cache.set(CACHE_KEY.CHARACTERS, characters)
   cache.set(CACHE_KEY.PASSIVES, passives)
   cache.set(CACHE_KEY.SKILLS, skills)
+  cache.set(CACHE_KEY.ORB, orb)
+  cache.set(CACHE_KEY.SOULS, soul)
+  cache.set(CACHE_KEY.EVENTS, events)
 
   return true
 }
@@ -24,6 +30,10 @@ type ConvertStyles = {
   characters: Character[],
   passives: Passive[],
   skills: Skill[]
+}
+type ConvertAccessories = {
+  orb: Accessory[],
+  soul: Accessory[],
 }
 
 function convertStyles(raw: RawStyle[]): ConvertStyles {
@@ -72,4 +82,50 @@ function convertStyles(raw: RawStyle[]): ConvertStyles {
     }))
     return result
   }, {styles: [], characters: [], passives: [], skills: []})
+}
+
+function convertAccessories(raw: RawAccessory[]): ConvertAccessories {
+  return raw.reduce<ConvertAccessories>((result, current) => {
+    if (current.location === '記憶の修復（記憶の庭）') {
+      // soul
+      result.soul.push({
+        id: current.id,
+        name: current.name,
+        in_date: current.in_date,
+        location: current.location,
+        text: current.text,
+        label: current.label,
+        image: current.image,
+        skill: current.skill,
+      })
+    } else if (current.location?.match(/オーブボス.?/) && current.skill.length) {
+      // orb
+      result.orb.push({
+        id: current.id,
+        name: current.name,
+        in_date: current.in_date,
+        location: current.location,
+        text: current.text,
+        label: current.label,
+        image: current.image,
+        skill: current.skill,
+      })
+    }
+    return result
+  }, {orb: [], soul: []})
+}
+
+function convertEvents(raw: Event[]): Event[] {
+  return raw.map(it => ({
+    id: it.id,
+    name: it.name,
+    in_date: it.in_date,
+    image: it.image,
+    desc: it.desc,
+    condition: it.condition,
+    label: it.label,
+    logo: it.logo,
+    notice_id: it.notice_id,
+    out_date: it.out_date,
+  }))
 }

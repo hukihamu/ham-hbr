@@ -3,7 +3,7 @@
 import {computed, ref, watch} from 'vue'
 import draggable from 'vuedraggable'
 import {useStore} from '@/store'
-import {images} from '@/utils/images.ts'
+import {images} from '@/utils/images'
 import {storeToRefs} from 'pinia'
 
 const {styles, characters} = storeToRefs(useStore())
@@ -12,18 +12,6 @@ const characterList = computed(() => Object.values<any>(characters.value))
 const isShowAll = ref(false)
 const selectOrb = ref()
 
-const generalizeDone = ref<any[]>([])
-const generalizeProgress = ref<any[]>([])
-const generalizeTodo = computed(() => ssStyles.value
-    .filter((it: any) => it.generalize)
-    .filter(it => !generalizeDone.value.find(done => done.id === it.id) && !generalizeProgress.value.find(progress => progress.id === it.id))
-    .filter(it => !limitBreak.value.find(lb => lb.id === it.id)))
-const growthDone = ref<any[]>([])
-const growthProgress = ref<any[]>([])
-const growthTodo = computed(() => ssStyles.value
-    .filter((it: any) => it.growth)
-    .filter(it => !growthDone.value.find(done => done.id === it.id) && !growthProgress.value.find(progress => progress.id === it.id))
-    .filter(it => !limitBreak.value.find(lb => lb.id === it.id)))
 const orbDone = ref<any>({})
 const orbProgress = ref<any>({})
 const orbTodo = ref<any>({})
@@ -46,11 +34,6 @@ const orbList = [
 ]
 
 function initUserData() {
-  generalizeDone.value = user.value.properties.generalizeDone.relation.map((it: any) => ssStyles.value.find(s => s.id === it.id))
-  generalizeProgress.value = user.value.properties.generalizeProgress.relation.map((it: any) => ssStyles.value.find(s => s.id === it.id))
-  growthDone.value = user.value.properties.growthDone.relation.map((it: any) => ssStyles.value.find(s => s.id === it.id))
-  growthProgress.value = user.value.properties.growthProgress.relation.map((it: any) => ssStyles.value.find(s => s.id === it.id))
-
 
   for (const orb of orbList) {
     orbProgress.value[orb.value] = user.value.properties[orb.value + 'Progress'].relation.map((it: any) => characters.value[it.id])
@@ -106,129 +89,6 @@ const tab = ref()
         <v-window v-model="tab">
           <v-window-item value="editor">
             <v-row>
-              <v-col>
-                <v-card title="ジェネライズ">
-                  <v-card-subtitle>
-                    <v-avatar :image="images.materialLv7()" />{{(generalizeTodo.length + generalizeProgress.length) * 3}}個
-                  </v-card-subtitle>
-                  <v-expansion-panels multiple variant="accordion">
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>
-                        ToDo<span class="text-grey ml-2">{{generalizeTodo.length}}スタイル</span>
-                      </v-expansion-panel-title>
-                      <v-expansion-panel-text class="overflow-x-auto">
-                        <draggable :model-value="sortStyles(generalizeTodo)"
-                                   direction="horizontal"
-                                   item-key="id"
-                                   group="generalize"
-                                   :class="['w-100','h-100','d-flex', 'justify-start', isShowAll ? 'flex-wrap' : '']">
-                          <template #item="{element}">
-                            <v-img :src="images.styleSelectIcon(element.background)" class="style"></v-img>
-                          </template>
-                        </draggable>
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>
-                        In Progress<span class="text-grey ml-2">{{generalizeProgress.length}}スタイル</span>
-                      </v-expansion-panel-title>
-                      <v-expansion-panel-text class="overflow-x-auto">
-                        <draggable :list="sortStyles(generalizeProgress)"
-                                   direction="horizontal"
-                                   item-key="id"
-                                   group="generalize"
-                                   :class="['w-100','h-100','d-flex', isShowAll ? 'flex-wrap' : '']">
-                          <template #item="{element}">
-                            <v-img :src="images.styleSelectIcon(element.background)" class="style"></v-img>
-                          </template>
-                        </draggable>
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>
-                        Done<span class="text-grey ml-2">{{generalizeDone.length}}スタイル</span>
-                      </v-expansion-panel-title>
-                      <v-expansion-panel-text class="overflow-x-auto">
-                        <draggable :list="sortStyles(generalizeDone)"
-                                   direction="horizontal"
-                                   item-key="id"
-                                   group="generalize"
-                                   :class="['w-100','h-100','d-flex', isShowAll ? 'flex-wrap' : '']">
-                          <template #item="{element}">
-                            <v-img :src="images.styleSelectIcon(element.background)" class="style"></v-img>
-                          </template>
-                        </draggable>
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                  </v-expansion-panels>
-                </v-card>
-              </v-col>
-              <v-divider/>
-              <v-col>
-                <v-card title="宝珠">
-                  <v-card-subtitle class="d-flex flex-wrap justify-space-between">
-                    <div><v-avatar :image="images.typeIcon('Slash')" />{{growthTypeCounter('Slash')}}個</div>
-                    <div><v-avatar :image="images.typeIcon('Stab')" />{{growthTypeCounter('Stab')}}個</div>
-                    <div><v-avatar :image="images.typeIcon('Strike')" />{{growthTypeCounter('Strike')}}個</div>
-                    <div><v-avatar :image="images.elementIcon('Fire')" />{{growthElementCounter('Fire')}}個</div>
-                    <div><v-avatar :image="images.elementIcon('Ice')" />{{growthElementCounter('Ice')}}個</div>
-                    <div><v-avatar :image="images.elementIcon('Thunder')" />{{growthElementCounter('Thunder')}}個</div>
-                    <div><v-avatar :image="images.elementIcon('Light')" />{{growthElementCounter('Light')}}個</div>
-                    <div><v-avatar :image="images.elementIcon('Dark')" />{{growthElementCounter('Dark')}}個</div>
-                    <div><v-spacer /></div>
-                  </v-card-subtitle>
-                  <v-expansion-panels multiple variant="accordion">
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>
-                        ToDo<span class="text-grey ml-2">{{growthTodo.length}}スタイル</span>
-                      </v-expansion-panel-title>
-                      <v-expansion-panel-text class="overflow-x-auto">
-                        <draggable :model-value="sortStyles(growthTodo)"
-                                   direction="horizontal"
-                                   item-key="id"
-                                   group="growth"
-                                   :class="['w-100','h-100','d-flex', 'justify-start', isShowAll ? 'flex-wrap' : '']">
-                          <template #item="{element}">
-                            <v-img :src="images.styleSelectIcon(element.background)" class="style"></v-img>
-                          </template>
-                        </draggable>
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>
-                        In Progress<span class="text-grey ml-2">{{growthProgress.length}}スタイル</span>
-                      </v-expansion-panel-title>
-                      <v-expansion-panel-text class="overflow-x-auto">
-                        <draggable :list="sortStyles(growthProgress)"
-                                   direction="horizontal"
-                                   item-key="id"
-                                   group="growth"
-                                   :class="['w-100','h-100','d-flex', isShowAll ? 'flex-wrap' : '']">
-                          <template #item="{element}">
-                            <v-img :src="images.styleSelectIcon(element.background)" class="style"></v-img>
-                          </template>
-                        </draggable>
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>
-                        Done<span class="text-grey ml-2">{{growthDone.length}}スタイル</span>
-                      </v-expansion-panel-title>
-                      <v-expansion-panel-text class="overflow-x-auto">
-                        <draggable :list="sortStyles(growthDone)"
-                                   direction="horizontal"
-                                   item-key="id"
-                                   group="growth"
-                                   :class="['w-100','h-100','d-flex', isShowAll ? 'flex-wrap' : '']">
-                          <template #item="{element}">
-                            <v-img :src="images.styleSelectIcon(element.background)" class="style"></v-img>
-                          </template>
-                        </draggable>
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                  </v-expansion-panels>
-                </v-card>
-              </v-col>
               <v-divider/>
               <v-col>
                 <v-card title="オーブ">

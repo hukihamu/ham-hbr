@@ -1,4 +1,4 @@
-import {isDev, WrapperScriptType} from '@/utils.ts'
+import {isDev, WrapperScriptType} from '@/utils'
 
 
 export const isAdmin: WrapperScriptType['isAdmin'] = async () => {

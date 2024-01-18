@@ -26,6 +26,17 @@ export const images = {
     },
     teamIcon(team: string) {
         return `https://hbr.quest/ui/${team.toLowerCase().replace(' ', '')}.webp`
+    },
+    image(webp: string) {
+        return `https://hbr.quest/hbr/${webp}`
+    },
+    eventBg(logo: string) {
+        // 有効パスが少なめ
+        return `https://hbr.quest/hbr/${logo.replace('Logo', 'Bg')}`
+    },
+    eventBanner(logo: string) {
+        // 有効パスが少なめ
+        return `https://hbr.quest/hbr/${logo.replace('Logo', 'Banner')}`
     }
     // https://hbr.quest/g/RKayamoriProfile.webp?34
 }

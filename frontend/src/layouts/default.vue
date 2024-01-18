@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import {useStorageStore, useStore} from '@/store.ts'
+import {useStorageStore, useStore} from '@/store'
 import {storeToRefs} from 'pinia'
-import {scripts} from '@/scripts.ts'
+import {scripts} from '@/scripts'
 import {useTheme} from 'vuetify'
 
 const {isAdmin} = storeToRefs(useStore())
@@ -22,7 +22,7 @@ function toggleTheme() {
     <v-navigation-drawer permanent expand-on-hover rail class="py-3">
       <v-list-item to="/" title="index" prepend-icon="mdi-home"/>
       <v-list-item to="/styles" title="スタイル" prepend-icon="mdi-palette-swatch"/>
-      <v-list-item to="/user" title="ユーザ" prepend-icon="mdi-account"/>
+      <v-list-item to="/user" title="ユーザ情報" prepend-icon="mdi-account"/>
       <template #append>
         <v-list-item @click="toggleTheme" title="テーマ切り替え" prepend-icon="mdi-theme-light-dark"/>
       </template>

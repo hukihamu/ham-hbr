@@ -7,6 +7,10 @@ export const CACHE_KEY = {
     CHARACTERS: 2,
     SKILLS: 3,
     PASSIVES: 4,
+    ORB: 5,
+    SOULS: 6,
+    EVENTS: 7,
+    CHAPTERS: 8,
 }
 export const NOTION_KEY = {
     STYLES: '01787c6e41494170bb82a84084bf61ed',

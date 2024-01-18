@@ -4,41 +4,38 @@ import {computed} from 'vue'
 import {storeToRefs} from 'pinia'
 import {useStorageStore, useStore} from '@/store.ts'
 import {images} from '@/utils/images.ts'
-import {Style} from '@ham-vue3-gas/shared'
-import {filterNotUndefined} from '@/utils/utiles.ts'
+import {getStylesById} from '@/utils/utiles.ts'
 
 const {styles} = storeToRefs(useStore())
 const {lb0, lb1, lb2, lb3, lb4, lb5, lb6, ownedStyles} = storeToRefs(useStorageStore())
 const limitBreak = computed(() => styles.value.filter(it => it.tier === 'SS' && !ownedStyles.value.includes(it.id)))
-function getLimitBreakStyle(ids: number[], _styles: Style[]) {
-  return filterNotUndefined(ids.map(id => _styles.find(it => it.id === id))).sort((a, b) => a.id - b.id)
-}
+
 const limitBreak0 = computed({
-  get: () => getLimitBreakStyle(lb0.value, styles.value),
+  get: () => getStylesById(lb0.value, styles.value),
   set: (values) => lb0.value = values.map(it => it!!.id),
 })
 const limitBreak1 = computed({
-  get: () => getLimitBreakStyle(lb1.value, styles.value),
+  get: () => getStylesById(lb1.value, styles.value),
   set: (values) => lb1.value = values.map(it => it!!.id),
 })
 const limitBreak2 = computed({
-  get: () => getLimitBreakStyle(lb2.value, styles.value),
+  get: () => getStylesById(lb2.value, styles.value),
   set: (values) => lb2.value = values.map(it => it!!.id),
 })
 const limitBreak3 = computed({
-  get: () => getLimitBreakStyle(lb3.value, styles.value),
+  get: () => getStylesById(lb3.value, styles.value),
   set: (values) => lb3.value = values.map(it => it!!.id),
 })
 const limitBreak4 = computed({
-  get: () => getLimitBreakStyle(lb4.value, styles.value),
+  get: () => getStylesById(lb4.value, styles.value),
   set: (values) => lb4.value = values.map(it => it!!.id),
 })
 const limitBreak5 = computed({
-  get: () => getLimitBreakStyle(lb5.value, styles.value),
+  get: () => getStylesById(lb5.value, styles.value),
   set: (values) => lb5.value = values.map(it => it!!.id),
 })
 const limitBreak6 = computed({
-  get: () => getLimitBreakStyle(lb6.value, styles.value),
+  get: () => getStylesById(lb6.value, styles.value),
   set: (values) => lb6.value = values.map(it => it!!.id),
 })
 </script>
@@ -160,7 +157,6 @@ const limitBreak6 = computed({
           </VueDraggable>
         </div>
       </div>
-
     </v-card-text>
   </v-card>
 </template>
