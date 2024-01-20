@@ -1,5 +1,5 @@
 // repository name
-const repositoryName = '/ham-hbr'
+const rootPath = '/ham-hbr'
 const gasURL = 'https://script.google.com/macros/s/AKfycbyPW8USRRrM5tZ5s2aV4QBJSbAO6gxgQElKIP2qXi16QAo--jIOIb93d7lT99ud6R-pcg/exec'
 window.addEventListener('message', (event) => {
   if (event.data?.type === 'after-each') {
@@ -12,9 +12,8 @@ window.addEventListener('message', (event) => {
       }
       return previousValue + `${currentValue}=${route.query[currentValue]}`
     }, '')
-    console.warn(repositoryName, route.path, query)
-    history.pushState({}, '',repositoryName + route.path + query)
+    history.pushState({}, '',rootPath + route.path + query)
   }
 })
 
-document.getElementById('gas-frame').src = gasURL + location.pathname.replace(repositoryName, '')
+document.getElementById('gas-frame').src = gasURL + '#' +location.pathname.replace(rootPath, '')
