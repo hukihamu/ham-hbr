@@ -12,9 +12,9 @@ window.addEventListener('message', (event) => {
       }
       return previousValue + `${currentValue}=${route.query[currentValue]}`
     }, '')
-    history.pushState({}, '',rootPath + route.path + query)
+    history.pushState({}, '',`${rootPath + query}#${route.path}` )
   }
 })
 window.addEventListener('load', () => {
-  document.getElementById('gas-frame').src = gasURL + '#' +location.pathname.replace(rootPath, '')
+  document.getElementById('gas-frame').src = `${gasURL}#${location.pathname.replace(rootPath, '')}`
 })
