@@ -14,6 +14,9 @@ window.addEventListener('DOMContentLoaded', async () => {
       history.pushState({}, '',`${location.pathname + query}#${route.path}` )
     }
   })
-
-  document.getElementById('gas-frame').src = `${gasURL}${location.hash}`
+  const gasFrame = document.getElementById('gas-frame')
+  gasFrame.src = `${gasURL}${location.hash}`
+  window.addEventListener('hashchange', () => {
+    gasFrame.src = `${gasURL}${location.hash}`
+  })
 })
