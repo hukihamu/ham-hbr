@@ -1,4 +1,3 @@
-const gasURL = "https://script.google.com/macros/s/AKfycbyPW8USRRrM5tZ5s2aV4QBJSbAO6gxgQElKIP2qXi16QAo--jIOIb93d7lT99ud6R-pcg/exec"
 window.addEventListener('DOMContentLoaded', async () => {
   window.addEventListener('message', (event) => {
     if (event.data?.type === 'after-each') {
@@ -15,5 +14,5 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   })
   const gasFrame = document.getElementById('gas-frame')
-  gasFrame.src = `${gasURL}${location.hash}`
+  gasFrame.src = `https://script.google.com/macros/s/${gasDeployId}/exec${location.hash}`
 })

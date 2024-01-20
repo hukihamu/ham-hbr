@@ -5,6 +5,7 @@ const path = require('path')
 const spawn = require('cross-spawn')
 const childProcess = require('child_process')
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
+require('dotenv').config()
 
 childProcess.execSync('webpack --mode development')
 const isDev = true
@@ -158,7 +159,7 @@ const ScriptApp = {
   getService() {
     return {
       getUrl() {
-        return 'http://localhost:3001#' + isDev ? 'dev' : 'exec'
+        return process.env.SERVICE_URL ?? 'http://localhost:3001/dev'
       }
     }
   }
@@ -180,7 +181,7 @@ wp.on('error', (error) => {
   console.error('build error:', error);
 })
 const app = express()
-const port = 3001
+const port = process.env.PORT ?? 3001
 
 app.use(cors())
 app.use(express.json());

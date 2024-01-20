@@ -20,14 +20,12 @@
 
     "dev-backend": "npm run dev -w backend",
     "dev-frontend": "npm run dev -w frontend",
-    "dev-shared": "npm run dev -w shared",
-    "dev-all": "run-p dev-backend dev-frontend dev-shared"
+    "dev-shared": "npm run dev -w shared"
   },
   "devDependencies": {
     "typescript": "^5.3.3",
     "@google/clasp": "^2.4.2",
     "ham-vue3-gas": "git+https://github.com/hukihamu/ham-vue3-gas.git",
-    "cpy-cli": "^5.0.0",
-    "npm-run-all": "^4.1.5"
+    "cpy-cli": "^5.0.0"
   }
 }
