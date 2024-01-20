@@ -20,10 +20,10 @@ const {userState} = storeToRefs(useStorageStore())
       <v-tab value="owned-styles">所持スタイル</v-tab>
       <v-tab value="generalize">ジェネライズ</v-tab>
       <v-tab value="growth">宝珠</v-tab>
-      <v-tab value="orb">オーブ</v-tab>
-      <v-tab value="stories">ストーリー順早見表</v-tab>
+      <v-tab value="orb" disabled>オーブ</v-tab>
+      <v-tab value="stories">ストーリー順 早見表</v-tab>
     </v-tabs>
-    <v-window v-model="userState.tab">
+    <v-window v-model="userState.tab" disabled>
       <v-window-item value="limit-break" class="mt-3">
         <LimitBreak />
       </v-window-item>

@@ -16,7 +16,8 @@ export interface Chapter {
   label: string
   name: string
   desc: string
-  out_date: string
+  image: string
+  in_date: string
 }
 
 export interface ChapterImages {

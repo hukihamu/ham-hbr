@@ -11,7 +11,7 @@ export const useStore = defineStore('store', {
     orb: <Accessory[]>[],
     souls: <Accessory[]>[],
     events: <Event[]>[],
-    chapters: <{chapters: Chapter[], chapterImages: ChapterImages}>{},
+    chapters: <{chapters: Chapter[], chapterImages: ChapterImages}>{chapters: [], chapterImages: {}},
     isAdmin: false,
   }),
   actions: {
@@ -68,7 +68,7 @@ export const useStore = defineStore('store', {
             }
             break
           case 'chapters':
-            if (!this.chapters.chapters) {
+            if (!Object.keys(this.chapters.chapterImages).length) {
               scripts.send('getChapters').then(it => {
                 this.chapters = it
               })

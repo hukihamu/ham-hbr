@@ -115,8 +115,8 @@ function convertAccessories(raw: RawAccessory[]): ConvertAccessories {
   }, {orb: [], soul: []})
 }
 
-function convertEvents(raw: Event[]): Event[] {
-  return raw.map(it => ({
+function convertEvents(raw: any[]): Event[] {
+  return raw.filter(it => !it.label.match(/^SideEvent\.PR/)).map(it => ({
     id: it.id,
     name: it.name,
     in_date: it.in_date,

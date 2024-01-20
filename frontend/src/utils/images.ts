@@ -11,8 +11,8 @@ export const images = {
     elementIcon(element: string) {
         return `https://hbr.quest/ui/${element}.webp`
     },
-    styleIcon(background: string) {
-        return `https://hbr.quest/hbr/${background.replace('.webp', '_Thumbnail.webp')}`
+    styleIcon(background?: string) {
+        return background ? `https://hbr.quest/hbr/${background.replace('.webp', '_Thumbnail.webp')}` : undefined
     },
     styleSelectIcon(background: string) {
         return `https://hbr.quest/hbr/${background.replace('.webp', '_Select.webp')}`

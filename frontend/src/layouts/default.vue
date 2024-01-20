@@ -24,7 +24,7 @@ function toggleTheme() {
       <v-list-item to="/styles" title="スタイル" prepend-icon="mdi-palette-swatch"/>
       <v-list-item to="/user" title="ユーザ情報" prepend-icon="mdi-account"/>
       <template #append>
-        <v-list-item @click="toggleTheme" title="テーマ切り替え" prepend-icon="mdi-theme-light-dark"/>
+        <v-list-item @click="toggleTheme" title="テーマ切り替え" prepend-icon="mdi-theme-light-dark" class="mb-9"/>
       </template>
     </v-navigation-drawer>
     <v-main>

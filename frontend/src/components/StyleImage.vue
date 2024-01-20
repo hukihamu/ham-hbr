@@ -1,6 +1,10 @@
 <script setup lang="ts">
-const {cover, src} = defineProps({
-  src: String
+const {src, cover} = defineProps({
+  src: String,
+  cover: {
+    type: Boolean,
+    default: false,
+  }
 })
 </script>
 
@@ -8,5 +12,11 @@ const {cover, src} = defineProps({
   <v-img :src="src"
          width="178px"
          height="72px"
-         class="ma-1"/>
+         :class="['ma-1', 'rounded-lg', cover ? 'mc-cover': '']"/>
 </template>
+<style>
+.mc-cover img{
+  height: 178px;
+  top: -21px;
+}
+</style>
