@@ -1,5 +1,5 @@
 
-window.addEventListener('load', async () => {
+window.addEventListener('DOMContentLoaded', async () => {
   const env = await fetch('env.json').then(it => it.json())
 
   window.addEventListener('message', (event) => {
