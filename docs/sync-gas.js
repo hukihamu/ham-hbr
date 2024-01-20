@@ -15,5 +15,6 @@ window.addEventListener('message', (event) => {
     history.pushState({}, '',rootPath + route.path + query)
   }
 })
-
-document.getElementById('gas-frame').src = gasURL + '#' +location.pathname.replace(rootPath, '')
+window.addEventListener('load', () => {
+  document.getElementById('gas-frame').src = gasURL + '#' +location.pathname.replace(rootPath, '')
+})
