@@ -16,7 +16,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   })
   const gasFrame = document.getElementById('gas-frame')
   gasFrame.src = `${gasURL}${location.hash}`
-  window.addEventListener('hashchange', () => {
+  window.addEventListener('hashchange', (evt) => {
+    console.log(evt)
     gasFrame.src = `${gasURL}${location.hash}`
   })
 })
