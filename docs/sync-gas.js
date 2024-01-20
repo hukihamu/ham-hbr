@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
         return previousValue + `${currentValue}=${route.query[currentValue]}`
       }, '')
-      history.pushState({}, '',`${location.pathname + query}#${route.path}` )
+      history.replaceState({}, '',`${location.pathname + query}#${route.path}` )
     }
   })
   const gasFrame = document.getElementById('gas-frame')
