@@ -1,6 +1,5 @@
-// repository name
-const rootPath = '/ham-hbr'
-const gasURL = 'https://script.google.com/macros/s/AKfycbyPW8USRRrM5tZ5s2aV4QBJSbAO6gxgQElKIP2qXi16QAo--jIOIb93d7lT99ud6R-pcg/exec'
+const env = await fetch('env.json').then(it => it.json())
+
 window.addEventListener('message', (event) => {
   if (event.data?.type === 'after-each') {
     const route = JSON.parse(event.data.value)
@@ -12,9 +11,9 @@ window.addEventListener('message', (event) => {
       }
       return previousValue + `${currentValue}=${route.query[currentValue]}`
     }, '')
-    history.pushState({}, '',`${rootPath + query}#${route.path}` )
+    history.pushState({}, '',`${env.rootPath + query}#${route.path}` )
   }
 })
 window.addEventListener('load', () => {
-  document.getElementById('gas-frame').src = `${gasURL}#${location.pathname.replace(rootPath, '')}`
+  document.getElementById('gas-frame').src = `${env.gasURL}#${location.pathname.replace(env.rootPath, '')}`
 })
