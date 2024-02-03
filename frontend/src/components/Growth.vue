@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import VueDraggable from 'vuedraggable'
-import {images} from '@/utils/images.ts'
+import {images} from '@/utils/images'
 import {computed} from 'vue'
-import {getStylesById} from '@/utils/utiles.ts'
+import {getListById, zeroToOne} from '@/utils/utiles'
 import {storeToRefs} from 'pinia'
-import {useStorageStore, useStore} from '@/store.ts'
+import {useStorageStore, useStore} from '@/store'
 
-const {styles} = storeToRefs(useStore())
+const store = useStore()
+store.init('styles')
+const {styles} = storeToRefs(store)
 const {growthProgress, growthDone, ownedStyles} = storeToRefs(useStorageStore())
 const grTodo = computed(() => styles.value.filter(it =>
     it.tier === 'SS'
@@ -15,11 +17,11 @@ const grTodo = computed(() => styles.value.filter(it =>
     && !growthProgress.value.includes(it.id)
     && !growthDone.value.includes(it.id)))
 const grProgress = computed({
-  get: () => getStylesById(growthProgress.value, styles.value),
+  get: () => getListById(growthProgress.value, styles.value),
   set: (values) => growthProgress.value = values.map(it => it!!.id),
 })
 const grDone = computed({
-  get: () => getStylesById(growthDone.value, styles.value),
+  get: () => getListById(growthDone.value, styles.value),
   set: (values) => growthDone.value = values.map(it => it!!.id),
 })
 
@@ -82,19 +84,27 @@ function growthElementCounter(element: 'Fire' | 'Light' | 'Thunder' | 'Dark' | '
         </v-col>
       </v-row>
     </v-card-title>
-    <v-card-text  class="overflow-y-auto" style="max-height: calc(100vh - 150px)">
+    <v-card-subtitle class="text-center">
+      {{Math.round(grDone.length / zeroToOne(ownedStyles.length) * 1000) / 10}}%
+    </v-card-subtitle>
+    <v-card-text  class="overflow-y-auto" style="max-height: calc(100vh - 230px)">
       <div class="d-flex flex-row justify-center">
-        <div class="border column">
+        <div class="border column flex-md-grow-1">
           <VueDraggable :model-value="grTodo"
                         direction="vertical"
                         item-key="id"
-                        class="w-100 h-100"
+                        class="w-100 h-100 d-flex flex-wrap justify-start align-content-start"
                         group="growth">
             <template #header>
               <div class="title">未育成</div>
             </template>
             <template #item="{element}">
-              <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              <v-img :src="images.styleSelectIcon(element.bg)"
+                     width="178px"
+                     height="72px"
+                     max-width="178px"
+                     max-height="72px"
+                     class="ma-1"/>
             </template>
           </VueDraggable>
         </div>
@@ -108,21 +118,25 @@ function growthElementCounter(element: 'Fire' | 'Light' | 'Thunder' | 'Dark' | '
               <div class="title">育成中</div>
             </template>
             <template #item="{element}">
-              <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px"
+                     max-width="178px"
+                     max-height="72px" class="ma-1"/>
             </template>
           </VueDraggable>
         </div>
-        <div class="border column">
+        <div class="border column flex-md-grow-1">
           <VueDraggable v-model="grDone"
                         direction="vertical"
                         item-key="id"
-                        class="w-100 h-100"
+                        class="w-100 h-100 d-flex flex-wrap justify-start align-content-start"
                         group="growth">
             <template #header>
               <div class="title">育成済</div>
             </template>
             <template #item="{element}">
-              <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px"
+                     max-width="178px"
+                     max-height="72px" class="ma-1"/>
             </template>
           </VueDraggable>
         </div>
@@ -134,7 +148,7 @@ function growthElementCounter(element: 'Fire' | 'Light' | 'Thunder' | 'Dark' | '
 <style scoped>
 .title {
   position: sticky;
-  top: 0;
+  top: -16px;
   background-color: rgb(var(--v-theme-surface));
   z-index: 10;
   text-align: center;

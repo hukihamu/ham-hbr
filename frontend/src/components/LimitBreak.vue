@@ -2,46 +2,48 @@
 import VueDraggable from 'vuedraggable'
 import {computed} from 'vue'
 import {storeToRefs} from 'pinia'
-import {useStorageStore, useStore} from '@/store.ts'
-import {images} from '@/utils/images.ts'
-import {getStylesById} from '@/utils/utiles.ts'
+import {useStorageStore, useStore} from '@/store'
+import {images} from '@/utils/images'
+import {getListById} from '@/utils/utiles'
 
-const {styles} = storeToRefs(useStore())
+const store = useStore()
+store.init('styles')
+const {styles} = storeToRefs(store)
 const {lb0, lb1, lb2, lb3, lb4, lb5, lb6, ownedStyles} = storeToRefs(useStorageStore())
 const limitBreak = computed(() => styles.value.filter(it => it.tier === 'SS' && !ownedStyles.value.includes(it.id)))
 
 const limitBreak0 = computed({
-  get: () => getStylesById(lb0.value, styles.value),
+  get: () => getListById(lb0.value, styles.value),
   set: (values) => lb0.value = values.map(it => it!!.id),
 })
 const limitBreak1 = computed({
-  get: () => getStylesById(lb1.value, styles.value),
+  get: () => getListById(lb1.value, styles.value),
   set: (values) => lb1.value = values.map(it => it!!.id),
 })
 const limitBreak2 = computed({
-  get: () => getStylesById(lb2.value, styles.value),
+  get: () => getListById(lb2.value, styles.value),
   set: (values) => lb2.value = values.map(it => it!!.id),
 })
 const limitBreak3 = computed({
-  get: () => getStylesById(lb3.value, styles.value),
+  get: () => getListById(lb3.value, styles.value),
   set: (values) => lb3.value = values.map(it => it!!.id),
 })
 const limitBreak4 = computed({
-  get: () => getStylesById(lb4.value, styles.value),
+  get: () => getListById(lb4.value, styles.value),
   set: (values) => lb4.value = values.map(it => it!!.id),
 })
 const limitBreak5 = computed({
-  get: () => getStylesById(lb5.value, styles.value),
+  get: () => getListById(lb5.value, styles.value),
   set: (values) => lb5.value = values.map(it => it!!.id),
 })
 const limitBreak6 = computed({
-  get: () => getStylesById(lb6.value, styles.value),
+  get: () => getListById(lb6.value, styles.value),
   set: (values) => lb6.value = values.map(it => it!!.id),
 })
 </script>
 
 <template>
-  <v-card class="overflow-auto" max-height="calc(100vh - 100px)">
+  <v-card class="overflow-auto" max-height="calc(100vh - 160px)">
     <v-card-text>
       <div class="d-flex flex-row">
         <div class="border column">

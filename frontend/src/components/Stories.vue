@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import {storeToRefs} from 'pinia'
-import {useStorageStore, useStore} from '@/store.ts'
-import {computed} from 'vue'
-import {images} from '@/utils/images.ts'
+import {useStorageStore, useStore} from '@/store'
+import {computed, ref} from 'vue'
+import {images} from '@/utils/images'
 import StyleImage from '@/components/StyleImage.vue'
+import {zeroToOne} from 'frontend/src/utils/utiles'
 
-const {styles, events, souls, chapters} = storeToRefs(useStore())
+const store = useStore()
+store.init('styles', 'events', 'souls', 'masterData')
+const {styles, events, souls, masterData} = storeToRefs(store)
 const {storiesDone} = storeToRefs(useStorageStore())
 const soulStyles = computed(() => souls.value.map((it:any) => {
   it.bg = styles.value.find(s => `Acc.Soul.${s.label}` === it.label)?.bg
@@ -16,11 +19,17 @@ function toSortKey(data: any) {
   const key = data.bg ? 3 : data.notice_id ? 2 : 1
   return time + key
 }
-const stories = computed(() => [...chapters.value.chapters.sort((a, b) => b.id - a.id), ...events.value, ...soulStyles.value]
+const isMain = ref(true)
+const isEvent = ref(true)
+const isMemory = ref(true)
+const stories = computed(() => [
+      ...(isMain.value ? masterData.value.chapters.sort((a, b) => b.id - a.id) : []),
+      ...(isEvent.value ? events.value : []),
+      ...(isMemory.value ? soulStyles.value : [])]
     .map(it => ({...it, props: {border: true, rounded: true}}))
     .sort((a: any, b: any) => toSortKey(b) - toSortKey(a)))
 function getEventImage(label: string): string | undefined {
-  const bg = chapters.value.chapterImages[label]
+  const bg = masterData.value.chapterImages[label]
   return bg ? images.styleSelectIcon(bg) : undefined
 }
 function onClickBulkSelect(value: any) {
@@ -44,7 +53,16 @@ function onClickBulkSelect(value: any) {
 </script>
 
 <template>
-<v-card subtitle="ctrl + click で過去まで範囲選択">
+<v-card>
+  <v-card-title class="d-flex">
+    <v-checkbox-btn label="メインストーリー" v-model="isMain"/>
+    <v-checkbox-btn label="イベントストーリー" v-model="isEvent"/>
+    <v-checkbox-btn label="メモリーストーリー" v-model="isMemory"/>
+  </v-card-title>
+  <v-card-subtitle>
+    <p class="text-center">{{Math.round(storiesDone.length / zeroToOne(stories.length) * 1000) / 10}}%</p>
+    <p>ctrl + click で過去まで範囲選択</p>
+  </v-card-subtitle>
   <v-card-text>
     <v-list select-strategy="classic"
             :selected="storiesDone"

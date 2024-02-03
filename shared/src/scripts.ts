@@ -1,7 +1,8 @@
 import {BaseScriptType} from 'ham-vue3-gas/share'
 import {Character, Passive, Skill, Style} from './styles'
 import {Accessory} from './accessory'
-import {Chapter, ChapterImages, Event} from './event'
+import {Event} from './event'
+import {Chapter, ChapterImages} from './masterData'
 
 export interface Scripts extends BaseScriptType {
     getStyles: () => Style[]
@@ -13,6 +14,6 @@ export interface Scripts extends BaseScriptType {
     getEvents: () => Event[]
     updateCache: () => boolean
     isAdmin: () => boolean
-    getChapters: () => {chapters: Chapter[], chapterImages: ChapterImages}
-    setChapters: (args: {chapters: Chapter[], chapterImages: ChapterImages}) => boolean
+    getMasterData: () => {chapters: Chapter[], chapterImages: ChapterImages}
+    setMasterData: (args: {chapters: Chapter[], chapterImages: ChapterImages}) => boolean
 }

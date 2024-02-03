@@ -4,7 +4,7 @@ import {storeToRefs} from 'pinia'
 import {scripts} from '@/scripts'
 import {useTheme} from 'vuetify'
 
-const {isAdmin} = storeToRefs(useStore())
+const {isAdmin, isLoading} = storeToRefs(useStore())
 scripts.send('isAdmin').then(it => {
   isAdmin.value = it
 })
@@ -28,7 +28,14 @@ function toggleTheme() {
       </template>
     </v-navigation-drawer>
     <v-main>
-      <router-view/>
+      <v-overlay :model-value="isLoading"
+                 persistent
+                 class="align-center justify-center">
+        <template #activator>
+          <router-view/>
+        </template>
+        <v-progress-circular indeterminate size="100" />
+      </v-overlay>
     </v-main>
   </v-app>
 </template>

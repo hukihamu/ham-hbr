@@ -11,7 +11,7 @@ createGasApp().useScripts(scripts, (global, wrapperScript) => {
     global.getOrb = wrapperScript('getOrb')
     global.getEvents = wrapperScript('getEvents')
     global.getSouls = wrapperScript('getSouls')
-    global.getChapters = wrapperScript('getChapters')
-    global.setChapters = wrapperScript('setChapters')
+    global.getMasterData = wrapperScript('getMasterData')
+    global.setMasterData = wrapperScript('setMasterData')
 })
 

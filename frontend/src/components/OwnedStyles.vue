@@ -4,8 +4,11 @@ import {useStorageStore, useStore} from '@/store'
 import {images} from '@/utils/images'
 import {computed} from 'vue'
 import {Style} from '@ham-vue3-gas/shared'
+import {zeroToOne} from 'frontend/src/utils/utiles'
 
-const {styles} = storeToRefs(useStore())
+const store = useStore()
+store.init('styles')
+const {styles} = storeToRefs(store)
 const ssStyles = computed<Style[]>(() => styles.value.filter(it => it.tier === 'SS'))
 const {ownedStyles} = storeToRefs(useStorageStore())
 const teams = ['31A', '31B', '31C', '31D', '31E', '31F', '31X', '30G', 'Angel Beats']
@@ -24,14 +27,10 @@ const sortStyles = computed<{[team: string]: {ownerCount: number, styles: OwnerS
   }
   return obj
 }, {}))
-function zeroToOne(num: number): number {
-  if (num === 0) return 1
-  return num
-}
 </script>
 
 <template>
-  <v-card class="overflow-y-auto" max-height="calc(100vh - 100px)">
+  <v-card class="overflow-y-auto" max-height="calc(100vh - 160px)">
     <v-card-title>
       {{ownedStyles.length}}/{{ssStyles.length}} {{Math.round(ownedStyles.length / zeroToOne(ssStyles.length) * 1000) / 10}}%
     </v-card-title>

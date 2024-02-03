@@ -11,71 +11,78 @@ export const useStore = defineStore('store', {
     orb: <Accessory[]>[],
     souls: <Accessory[]>[],
     events: <Event[]>[],
-    chapters: <{chapters: Chapter[], chapterImages: ChapterImages}>{chapters: [], chapterImages: {}},
+    masterData: <{chapters: Chapter[], chapterImages: ChapterImages}>{chapters: [], chapterImages: {}},
     isAdmin: false,
+    isLoading: false,
   }),
   actions: {
-    init(...options: ('styles' | 'characters' | 'passives' | 'skills' | 'orb' | 'souls' | 'events' | 'chapters')[]) {
-      new Set(options).forEach(it => {
+    init(...options: ('styles' | 'characters' | 'passives' | 'skills' | 'orb' | 'souls' | 'events' | 'masterData')[]) {
+      const promiseList = [...(new Set(options))].map(it => {
         switch (it) {
           case 'characters':
             if (!this.characters.length) {
-              scripts.send('getCharacters').then(it => {
+              return scripts.send('getCharacters').then(it => {
                 this.characters = it
               })
             }
             break
           case 'passives':
             if (!this.passives.length) {
-              scripts.send('getPassives').then(it => {
+              return scripts.send('getPassives').then(it => {
                 this.passives = it
               })
             }
             break
           case 'skills':
             if (!this.skills.length) {
-              scripts.send('getSkills').then(it => {
+              return scripts.send('getSkills').then(it => {
                 this.skills = it
               })
             }
             break
           case 'styles':
             if (!this.styles.length) {
-              scripts.send('getStyles').then(it => {
+              return scripts.send('getStyles').then(it => {
                 this.styles = it
               })
             }
             break
           case 'orb':
             if (!this.orb.length) {
-              scripts.send('getOrb').then(it => {
+              return scripts.send('getOrb').then(it => {
                 this.orb = it
               })
             }
             break
           case 'events':
             if (!this.events.length) {
-              scripts.send('getEvents').then(it => {
+              return scripts.send('getEvents').then(it => {
                 this.events = it
               })
             }
             break
           case 'souls':
             if (!this.souls.length) {
-              scripts.send('getSouls').then(it => {
+              return scripts.send('getSouls').then(it => {
                 this.souls = it
               })
             }
             break
-          case 'chapters':
-            if (!Object.keys(this.chapters.chapterImages).length) {
-              scripts.send('getChapters').then(it => {
-                this.chapters = it
+          case 'masterData':
+            if (!Object.keys(this.masterData.chapterImages).length) {
+              return scripts.send('getMasterData').then(it => {
+                this.masterData = it
               })
             }
             break
         }
-      })
+      }).filter(it => it)
+      if (promiseList.length) {
+        this.isLoading = true
+        Promise.all(promiseList).then(() => {
+          this.isLoading = false
+        })
+      }
     }
   }
 })
@@ -94,6 +101,8 @@ export const useStorageStore = defineStore('localStorage', {
     generalizeDone: new Array<number>(),
     growthProgress: new Array<number>(),
     growthDone: new Array<number>(),
+    orbProgress: {} as {[id: number]: number[]},
+    orbDone: {} as {[id: number]: number[]},
     storiesDone: new Array<number>(),
     theme: 'light',
     userState: {
