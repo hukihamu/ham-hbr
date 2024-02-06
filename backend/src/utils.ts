@@ -11,6 +11,7 @@ export const CACHE_KEY = {
     SOULS: 6,
     EVENTS: 7,
     CHAPTERS: 8,
+    DEV_DATA: 9,
 }
 export const NOTION_KEY = {
     STYLES: '01787c6e41494170bb82a84084bf61ed',

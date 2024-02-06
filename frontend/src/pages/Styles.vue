@@ -47,7 +47,6 @@ function getSortOrder(key: string): string {
                       label="キャラ"
                       v-model="stylesState.character"
                       clearable
-                      chips
                       item-value="id"
                       item-title="chara"
                       :items="characters">
@@ -58,10 +57,8 @@ function getSortOrder(key: string): string {
                   </template>
                 </v-list-item>
               </template>
-              <template #chip="{item}">
-                <v-chip>
-                  <v-avatar :image="images.charSmallIcon(item.raw.chara_label)" />
-                </v-chip>
+              <template #selection="{item}">
+                <v-avatar :image="images.charSmallIcon(item.raw.chara_label)" />
               </template>
             </v-select>
           </v-col>
@@ -70,7 +67,6 @@ function getSortOrder(key: string): string {
                       label="レア"
                       v-model="stylesState.tier"
                       clearable
-                      chips
                       :items="['SS', 'S', 'A']">
               <template #item="{item, props}">
                 <v-list-item v-bind="props">
@@ -79,10 +75,8 @@ function getSortOrder(key: string): string {
                   </template>
                 </v-list-item>
               </template>
-              <template #chip="{item}">
-                <v-chip>
-                  <v-avatar :image="images.rarityIcon(item.title)" />
-                </v-chip>
+              <template #selection="{item}">
+                <v-avatar :image="images.rarityIcon(item.title)" />
               </template>
             </v-select>
           </v-col>
@@ -91,7 +85,6 @@ function getSortOrder(key: string): string {
                       label="属性"
                       v-model="stylesState.type"
                       clearable
-                      chips
                       :items="['Slash', 'Stab', 'Strike']">
               <template #item="{item, props}">
                 <v-list-item v-bind="props">
@@ -100,10 +93,8 @@ function getSortOrder(key: string): string {
                   </template>
                 </v-list-item>
               </template>
-              <template #chip="{item}">
-                <v-chip>
-                  <v-avatar :image="images.typeIcon(item.title)" />
-                </v-chip>
+              <template #selection="{item}">
+                <v-avatar :image="images.typeIcon(item.title)" />
               </template>
             </v-select>
           </v-col>
@@ -112,7 +103,6 @@ function getSortOrder(key: string): string {
                       label="元素"
                       v-model="stylesState.element"
                       clearable
-                      chips
                       :items="['Fire', 'Ice', 'Thunder', 'Light', 'Dark', 'Nonelement']">
               <template #item="{item, props}">
                 <v-list-item v-bind="props">
@@ -121,10 +111,8 @@ function getSortOrder(key: string): string {
                   </template>
                 </v-list-item>
               </template>
-              <template #chip="{item}">
-                <v-chip>
-                  <v-avatar :image="images.elementIcon(item.title)" />
-                </v-chip>
+              <template #selection="{item}">
+                <v-avatar :image="images.elementIcon(item.title)" />
               </template>
             </v-select>
           </v-col>

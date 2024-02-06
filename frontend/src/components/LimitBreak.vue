@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import VueDraggable from 'vuedraggable'
-import {computed} from 'vue'
+import {computed, ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import {useStorageStore, useStore} from '@/store'
 import {images} from '@/utils/images'
 import {getListById} from '@/utils/utiles'
 
 const store = useStore()
-store.init('styles')
-const {styles} = storeToRefs(store)
+store.init('styles', 'characters')
+const {styles, characters} = storeToRefs(store)
 const {lb0, lb1, lb2, lb3, lb4, lb5, lb6, ownedStyles} = storeToRefs(useStorageStore())
+const selectCharacter = ref<number[]>([])
 const limitBreak = computed(() => styles.value.filter(it => it.tier === 'SS' && !ownedStyles.value.includes(it.id)))
-
 const limitBreak0 = computed({
   get: () => getListById(lb0.value, styles.value),
   set: (values) => lb0.value = values.map(it => it!!.id),
@@ -44,6 +44,26 @@ const limitBreak6 = computed({
 
 <template>
   <v-card class="overflow-auto" max-height="calc(100vh - 160px)">
+    <v-card-title>
+      <v-select multiple
+                label="キャラ"
+                v-model="selectCharacter"
+                clearable
+                item-value="id"
+                item-title="chara"
+                :items="characters">
+        <template #item="{item, props}">
+          <v-list-item v-bind="props">
+            <template #prepend>
+              <v-avatar :image="images.charSmallIcon(item.raw.chara_label)"/>
+            </template>
+          </v-list-item>
+        </template>
+        <template #selection="{item}">
+          <v-avatar :image="images.charSmallIcon(item.raw.chara_label)"/>
+        </template>
+      </v-select>
+    </v-card-title>
     <v-card-text>
       <div class="d-flex flex-row">
         <div class="border column">
@@ -56,7 +76,9 @@ const limitBreak6 = computed({
               <div class="title">未所持</div>
             </template>
             <template #item="{element}">
-              <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              <div v-if="!selectCharacter.length || selectCharacter.includes(element.character_id)">
+                <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              </div>
             </template>
           </VueDraggable>
         </div>
@@ -70,7 +92,9 @@ const limitBreak6 = computed({
               <div class="title">0凸</div>
             </template>
             <template #item="{element}">
-              <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              <div v-if="!selectCharacter.length || selectCharacter.includes(element.character_id)">
+                <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              </div>
             </template>
           </VueDraggable>
         </div>
@@ -84,7 +108,9 @@ const limitBreak6 = computed({
               <div class="title">1凸</div>
             </template>
             <template #item="{element}">
-              <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              <div v-if="!selectCharacter.length || selectCharacter.includes(element.character_id)">
+                <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              </div>
             </template>
           </VueDraggable>
         </div>
@@ -98,7 +124,9 @@ const limitBreak6 = computed({
               <div class="title">2凸</div>
             </template>
             <template #item="{element}">
-              <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              <div v-if="!selectCharacter.length || selectCharacter.includes(element.character_id)">
+                <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              </div>
             </template>
           </VueDraggable>
         </div>
@@ -112,7 +140,9 @@ const limitBreak6 = computed({
               <div class="title">2.5凸</div>
             </template>
             <template #item="{element}">
-              <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              <div v-if="!selectCharacter.length || selectCharacter.includes(element.character_id)">
+                <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              </div>
             </template>
           </VueDraggable>
         </div>
@@ -126,7 +156,9 @@ const limitBreak6 = computed({
               <div class="title">3凸</div>
             </template>
             <template #item="{element}">
-              <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              <div v-if="!selectCharacter.length || selectCharacter.includes(element.character_id)">
+                <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              </div>
             </template>
           </VueDraggable>
         </div>
@@ -140,7 +172,9 @@ const limitBreak6 = computed({
               <div class="title">3.5凸</div>
             </template>
             <template #item="{element}">
-              <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              <div v-if="!selectCharacter.length || selectCharacter.includes(element.character_id)">
+                <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              </div>
             </template>
           </VueDraggable>
         </div>
@@ -154,7 +188,9 @@ const limitBreak6 = computed({
               <div class="title">4凸</div>
             </template>
             <template #item="{element}">
-              <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              <div v-if="!selectCharacter.length || selectCharacter.includes(element.character_id)">
+                <v-img :src="images.styleSelectIcon(element.bg)" width="178px" height="72px" class="ma-1"/>
+              </div>
             </template>
           </VueDraggable>
         </div>
@@ -175,6 +211,7 @@ const limitBreak6 = computed({
   font-size: 1.1rem;
   margin-top: 4px;
 }
+
 .column {
   min-width: 185px;
 }

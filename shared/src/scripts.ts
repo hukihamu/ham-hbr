@@ -16,4 +16,6 @@ export interface Scripts extends BaseScriptType {
     isAdmin: () => boolean
     getMasterData: () => {chapters: Chapter[], chapterImages: ChapterImages}
     setMasterData: (args: {chapters: Chapter[], chapterImages: ChapterImages}) => boolean
+    getAdminData: () => any
+    setAdminData: (data: any) => boolean
 }

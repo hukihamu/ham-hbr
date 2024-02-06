@@ -10,18 +10,20 @@ export const errorHandlingPlugin = {
 
         // Vue.js以外のエラー
         window.addEventListener('error', (event) => {
-            handler('other', event.error)
+            handler('other', event, event.message !== 'ResizeObserver loop completed with undelivered notifications.')
+            event.stopPropagation()
             event.preventDefault()
         })
 
         // Promise経由で呼び出されるエラー(Promise.reject)
         window.addEventListener('unhandledrejection', (event) => {
             handler('promise', event.reason)
+            event.stopPropagation()
             event.preventDefault()
         })
     }
 }
-function handler(key: 'vue' | 'other' | 'promise', error: unknown) {
+function handler(key: 'vue' | 'other' | 'promise', error: unknown, isPush: boolean = true) {
     console.error(`${key} error`, error)
-    router.push('/error').then()
+    if (isPush) router.push('/error').then()
 }

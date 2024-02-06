@@ -26,6 +26,8 @@ const oDone = computed({
 })
 function toSSImage(label: string) {
   return images.image(label.replace('KAsakura', 'Karen') + 'Default_R3_Select.webp')
+      // ひさ子対応
+      .replace('BiancaADefault_R3_Select', 'BiancaADefault_R2_Select')
 }
 </script>
 
@@ -38,16 +40,16 @@ function toSSImage(label: string) {
           <template #prepend>
             <v-avatar :image="images.image(item.raw.image)" />
           </template>
+          <template #append>
+            ({{Math.round((orbDone[item.value] ?? []).length / zeroToOne(characters.length) * 1000) / 10}}%)
+          </template>
         </v-list-item>
       </template>
       <template #selection="{item}">
-        <v-avatar :image="images.image(item.raw.image)" />{{item.title}}
+        <v-avatar :image="images.image(item.raw.image)" />{{item.title}} ({{Math.round(oDone.length / zeroToOne(characters.length) * 1000) / 10}}%)
       </template>
     </v-select>
   </v-card-title>
-  <v-card-subtitle class="text-center">
-    {{Math.round(oDone.length / zeroToOne(characters.length) * 1000) / 10}}%
-  </v-card-subtitle>
   <v-card-text class="overflow-y-auto pt-0" style="max-height: calc(100vh - 270px)">
     <div class="d-flex flex-row justify-center">
       <div class="border column flex-md-grow-1">
