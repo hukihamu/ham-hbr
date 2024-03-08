@@ -38,7 +38,8 @@ function growthTypeCounter(type: string) {
 function growthElementCounter(element: 'Fire' | 'Light' | 'Thunder' | 'Dark' | 'Ice') {
   return [...grTodo.value, ...grProgress.value]
       .reduce((sum, current) => {
-        if (current.elements.includes(element)) {
+        // 今のところ、最後のelementが宝珠対象
+        if (current.elements[current.elements.length - 1] === element) {
           sum += 51
         }
         return sum

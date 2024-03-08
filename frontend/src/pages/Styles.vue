@@ -25,7 +25,7 @@ const styleHeaders = [
   {key: 'tier', title: 'レア', width: '80px'},
   {key: 'role', title: 'ロール', width: '100px'},
   {key: 'type', title: '属性', width: '80px'},
-  {key: 'elements', title: '元素', width: '80px'},
+  {key: 'elements', title: '元素', width: '160px'},
   // {key: 'skills', title: 'スキル'},
   // {key: 'passives', title: 'パッシブ'},
   {key: 'in_date', title: '追加日', width: '100px'},
