@@ -103,6 +103,9 @@ export const useStorageStore = defineStore('localStorage', {
     growthDone: new Array<number>(),
     orbProgress: {} as {[id: number]: number[]},
     orbDone: {} as {[id: number]: number[]},
+    bonus1: new Array<number>(),
+    bonus2: new Array<number>(),
+    bonus3: new Array<number>(),
     storiesDone: new Array<number>(),
     theme: 'light',
     userState: {

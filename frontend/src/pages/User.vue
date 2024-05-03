@@ -7,6 +7,7 @@ import Generalize from '@/components/Generalize.vue'
 import Growth from '@/components/Growth.vue'
 import Stories from '@/components/Stories.vue'
 import Orb from '@/components/Orb.vue'
+import BonusPriority from '@/components/BonusPriority.vue'
 
 const {userState} = storeToRefs(useStorageStore())
 </script>
@@ -22,6 +23,7 @@ const {userState} = storeToRefs(useStorageStore())
         <v-tab value="growth">宝珠</v-tab>
         <v-tab value="orb">オーブ</v-tab>
         <v-tab value="stories">ストーリー順 早見表</v-tab>
+        <v-tab value="bonus-priority">限界突破ボーナス優先順位</v-tab>
       </v-tabs>
     </v-card-title>
     <v-card-text>
@@ -43,6 +45,9 @@ const {userState} = storeToRefs(useStorageStore())
         </v-window-item>
         <v-window-item value="stories" class="mt-3">
           <Stories />
+        </v-window-item>
+        <v-window-item value="bonus-priority" class="mt-3">
+          <BonusPriority />
         </v-window-item>
       </v-window>
     </v-card-text>

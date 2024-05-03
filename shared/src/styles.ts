@@ -73,7 +73,7 @@ interface BonusPerLevel {
   bonus: (AbilityBonus | PassiveBonus)[]
 }
 
-interface PassiveBonus {
+export interface PassiveBonus {
   category: 'Passive'
   id: number
   label: string
