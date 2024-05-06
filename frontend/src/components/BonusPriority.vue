@@ -77,7 +77,7 @@ const b3 = computed({
                         class="w-100 h-100"
                         group="b">
             <template #header>
-              <div class="title">低</div>
+              <div class="title">低(+1)</div>
             </template>
             <template #item="{element}">
               <v-card :title="element.name" :subtitle="element.info" :text="element.desc" class="ma-2">
@@ -95,7 +95,7 @@ const b3 = computed({
                         class="w-100 h-100"
                         group="b">
             <template #header>
-              <div class="title">中</div>
+              <div class="title">中(+2)</div>
             </template>
             <template #item="{element}">
               <v-card :title="element.name" :subtitle="element.info" :text="element.desc" class="ma-2">
@@ -113,7 +113,7 @@ const b3 = computed({
                         class="w-100 h-100"
                         group="b">
             <template #header>
-              <div class="title">高</div>
+              <div class="title">高(+3)</div>
             </template>
             <template #item="{element}">
               <v-card :title="element.name" :subtitle="element.info" :text="element.desc" class="ma-2">

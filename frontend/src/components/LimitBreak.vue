@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import VueDraggable from 'vuedraggable'
-import {computed, ref} from 'vue'
+import {computed, ref, watch} from 'vue'
 import {storeToRefs} from 'pinia'
 import {useStorageStore, useStore} from '@/store'
 import {images} from '@/utils/images'
@@ -12,39 +12,42 @@ const {styles, characters} = storeToRefs(store)
 const {lb0, lb1, lb2, lb3, lb4, lb5, lb6, ownedStyles, bonus1, bonus2, bonus3} = storeToRefs(useStorageStore())
 const selectCharacter = ref<number[]>([])
 const is3LBBonus = ref(false)
-const showStyles = computed(() => styles.value.map(style => {
-  const temp: any = style
-  if (!temp.bonus) temp.bonus = 0
-  style.limit_break.bonus_per_level.forEach(bpl => {
-    bpl.bonus.forEach(b => {
-      if (b.category === 'Passive') {
-        if (bonus3.value.find(it => it === b.id)) {
-          temp.bonus += 3
-        } else if (bonus2.value.find(it => it === b.id)) {
-          temp.bonus += 2
-        } else if (bonus1.value.find(it => it === b.id)) {
-          temp.bonus += 1
+const bonusStyles = ref<any[]>([])
+watch([bonus1, bonus2, bonus3], () => {
+  bonusStyles.value = styles.value.map(style => {
+    const temp: any = style
+    temp.bonus = 0
+    style.limit_break.bonus_per_level.forEach(bpl => {
+      bpl.bonus.forEach(b => {
+        if (b.category === 'Passive') {
+          if (bonus3.value.find(it => it === b.id)) {
+            temp.bonus += 3
+          } else if (bonus2.value.find(it => it === b.id)) {
+            temp.bonus += 2
+          } else if (bonus1.value.find(it => it === b.id)) {
+            temp.bonus += 1
+          }
         }
-      }
+      })
     })
+    return temp
   })
-  return temp
-}))
+}, {deep: true, immediate: true})
 const limitBreak = computed(() => styles.value.filter(it => it.tier === 'SS' && !ownedStyles.value.includes(it.id)))
 const limitBreak0 = computed({
-  get: () => getListById(lb0.value, showStyles.value),
+  get: () => getListById(lb0.value, bonusStyles.value, true).sort((a, b) => is3LBBonus.value ? b.bonus - a.bonus : 0),
   set: (values) => lb0.value = values.map(it => it!!.id),
 })
 const limitBreak1 = computed({
-  get: () => getListById(lb1.value, showStyles.value),
+  get: () => getListById(lb1.value, bonusStyles.value, true).sort((a, b) => is3LBBonus.value ? b.bonus - a.bonus : 0),
   set: (values) => lb1.value = values.map(it => it!!.id),
 })
 const limitBreak2 = computed({
-  get: () => getListById(lb2.value, showStyles.value),
+  get: () => getListById(lb2.value, bonusStyles.value, true).sort((a, b) => is3LBBonus.value ? b.bonus - a.bonus : 0),
   set: (values) => lb2.value = values.map(it => it!!.id),
 })
 const limitBreak3 = computed({
-  get: () => getListById(lb3.value, showStyles.value),
+  get: () => getListById(lb3.value, bonusStyles.value, true).sort((a, b) => is3LBBonus.value ? b.bonus - a.bonus : 0),
   set: (values) => lb3.value = values.map(it => it!!.id),
 })
 const limitBreak4 = computed({

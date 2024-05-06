@@ -14,20 +14,23 @@ scripts.send('isAdmin').then(async it => {
     isAdminLoad.value = true
     const data = await scripts.send('getAdminData')
     if (data) {
-      storageStore.storiesDone.value = data.storiesDone
-      storageStore.orbDone.value = data.orbDone
-      storageStore.orbProgress.value = data.orbProgress
-      storageStore.growthDone.value = data.growthDone
-      storageStore.growthProgress.value = data.growthProgress
-      storageStore.generalizeDone.value = data.generalizeDone
-      storageStore.generalizeProgress.value = data.generalizeProgress
-      storageStore.lb0.value = data.lb0
-      storageStore.lb1.value = data.lb1
-      storageStore.lb2.value = data.lb2
-      storageStore.lb3.value = data.lb3
-      storageStore.lb4.value = data.lb4
-      storageStore.lb5.value = data.lb5
-      storageStore.lb6.value = data.lb6
+      storageStore.storiesDone.value = data.storiesDone ?? []
+      storageStore.orbDone.value = data.orbDone ?? []
+      storageStore.orbProgress.value = data.orbProgress ?? []
+      storageStore.growthDone.value = data.growthDone ?? []
+      storageStore.growthProgress.value = data.growthProgress ?? []
+      storageStore.generalizeDone.value = data.generalizeDone ?? []
+      storageStore.generalizeProgress.value = data.generalizeProgress ?? []
+      storageStore.lb0.value = data.lb0 ?? []
+      storageStore.lb1.value = data.lb1 ?? []
+      storageStore.lb2.value = data.lb2 ?? []
+      storageStore.lb3.value = data.lb3 ?? []
+      storageStore.lb4.value = data.lb4 ?? []
+      storageStore.lb5.value = data.lb5 ?? []
+      storageStore.lb6.value = data.lb6 ?? []
+      storageStore.bonus1.value = data.bonus1 ?? []
+      storageStore.bonus2.value = data.bonus2 ?? []
+      storageStore.bonus3.value = data.bonus3 ?? []
     }
     watch([
       storageStore.lb0, storageStore.lb1, storageStore.lb2, storageStore.lb3,
@@ -35,6 +38,7 @@ scripts.send('isAdmin').then(async it => {
       storageStore.generalizeProgress, storageStore.generalizeDone,
       storageStore.growthProgress, storageStore.growthDone,
       storageStore.orbProgress, storageStore.orbDone,
+      storageStore.bonus1, storageStore.bonus2, storageStore.bonus3,
     ], () => {
       const id = Date.now()
       waitId.value = id
@@ -54,6 +58,9 @@ scripts.send('isAdmin').then(async it => {
           lb4: storageStore.lb4.value,
           lb5: storageStore.lb5.value,
           lb6: storageStore.lb6.value,
+          bonus1: storageStore.bonus1.value,
+          bonus2: storageStore.bonus2.value,
+          bonus3: storageStore.bonus3.value,
         }).then(isSuccess => {
           waitId.value = undefined
           if (!isSuccess) alert('up失敗')
