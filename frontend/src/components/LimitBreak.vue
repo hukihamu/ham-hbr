@@ -35,19 +35,19 @@ watch([bonus1, bonus2, bonus3], () => {
 }, {deep: true, immediate: true})
 const limitBreak = computed(() => styles.value.filter(it => it.tier === 'SS' && !ownedStyles.value.includes(it.id)))
 const limitBreak0 = computed({
-  get: () => getListById(lb0.value, bonusStyles.value, true).sort((a, b) => is3LBBonus.value ? b.bonus - a.bonus : 0),
+  get: () => getListById(lb0.value, bonusStyles.value, false).sort((a, b) => is3LBBonus.value ? b.bonus - a.bonus : 0),
   set: (values) => lb0.value = values.map(it => it!!.id),
 })
 const limitBreak1 = computed({
-  get: () => getListById(lb1.value, bonusStyles.value, true).sort((a, b) => is3LBBonus.value ? b.bonus - a.bonus : 0),
+  get: () => getListById(lb1.value, bonusStyles.value, false).sort((a, b) => is3LBBonus.value ? b.bonus - a.bonus : 0),
   set: (values) => lb1.value = values.map(it => it!!.id),
 })
 const limitBreak2 = computed({
-  get: () => getListById(lb2.value, bonusStyles.value, true).sort((a, b) => is3LBBonus.value ? b.bonus - a.bonus : 0),
+  get: () => getListById(lb2.value, bonusStyles.value, false).sort((a, b) => is3LBBonus.value ? b.bonus - a.bonus : 0),
   set: (values) => lb2.value = values.map(it => it!!.id),
 })
 const limitBreak3 = computed({
-  get: () => getListById(lb3.value, bonusStyles.value, true).sort((a, b) => is3LBBonus.value ? b.bonus - a.bonus : 0),
+  get: () => getListById(lb3.value, bonusStyles.value, false).sort((a, b) => is3LBBonus.value ? b.bonus - a.bonus : 0),
   set: (values) => lb3.value = values.map(it => it!!.id),
 })
 const limitBreak4 = computed({

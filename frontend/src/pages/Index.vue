@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useStore} from '@/store'
 import {storeToRefs} from 'pinia'
-import {ref, watch} from 'vue'
+import {computed, ref, watch} from 'vue'
 import {scripts} from '@/scripts'
 import {images} from '@/utils/images'
 
@@ -11,6 +11,8 @@ const isLoading = ref(false)
 watch(isAdmin, (newValue) => {
   if (newValue) store.init('events', 'masterData', 'styles')
 }, {immediate: true})
+const showStyles = computed(() => styles.value
+    .filter(it => it.tier !== 'A'))
 
 function onUpdateCache() {
   isLoading.value = true
@@ -116,7 +118,7 @@ const tab = ref()
                       <template #title>
                         <v-select :label="event.name"
                                   v-model="masterData.chapterImages[event.label]"
-                                  :items="styles.filter(it => it.tier !== 'A')" item-title="name" item-value="bg">
+                                  :items="showStyles" item-title="name" item-value="bg">
                           <template #selection="{item}">
                             <v-avatar :image="images.styleIcon(item.raw.bg)"/>
                             {{ item.title }}

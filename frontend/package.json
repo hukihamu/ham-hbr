@@ -10,18 +10,18 @@
     "@ham-vue3-gas/shared": "file:../shared",
 
     "vue": "^3.4.5",
-    "vue-router": "^4.2.5",
+    "vue-router": "^4.4.0",
 
-    "pinia": "^2.1.7",
+    "pinia": "^2.2.0",
     "pinia-plugin-persistedstate": "^3.2.1",
-    "vuetify": "^3.4.9",
-    "dexie": "^3.2.4",
+    "vuetify": "^3.6.13",
+    "dexie": "^3.2.7",
     "vuedraggable": "^4.1.0",
-    "sortablejs": "^1.14.0",
+    "sortablejs": "^1.15.2",
 
-    "vite": "^5.2.11",
-    "@vitejs/plugin-vue": "^5.0.2",
-    "vite-plugin-vuetify": "^2.0.1",
-    "vite-plugin-singlefile": "^0.13.5"
+    "vite": "^5.3.5",
+    "@vitejs/plugin-vue": "^5.1.1",
+    "vite-plugin-vuetify": "^2.0.3",
+    "vite-plugin-singlefile": "^2.0.2"
   }
 }
