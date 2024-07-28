@@ -123,6 +123,7 @@ export interface Skill {
   hits: Hit[]
   in_date: string
   is_strval?: boolean
+  isGeneralize?: boolean
 }
 
 interface Part {

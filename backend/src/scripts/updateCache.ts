@@ -78,6 +78,7 @@ function convertStyles(raw: RawStyle[]): ConvertStyles {
     result.skills.push(...current.skills.map(it => {
       const skill: Skill = it
       skill.style_id = current.id
+      skill.isGeneralize = skill.is_restricted === 1 && current.generalize
       return skill
     }))
     return result

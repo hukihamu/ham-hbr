@@ -9,8 +9,8 @@ import {getListById} from '@/utils/utiles'
 
 type MyPassiveBonus = { styleBGs: string[] } & PassiveBonus
 const store = useStore()
-store.init('styles')
-const {styles} = storeToRefs(store)
+store.init('styles', 'passives')
+const {styles, passives} = storeToRefs(store)
 const {bonus1, bonus2, bonus3} = storeToRefs(useStorageStore())
 const bonus = computed(() => {
   return styles.value.filter(it => it.tier == 'SS').reduce<MyPassiveBonus[]>((list, currentValue) => {
@@ -25,6 +25,17 @@ const bonus = computed(() => {
           }
         }
       })
+    })
+    currentValue.passive_ids.forEach(id => {
+      if (id !== 57000001) { // OD中火力を除外
+        const callbackBonus = list.find(it => it.id === id)
+        if (callbackBonus) {
+          callbackBonus.styleBGs.push(currentValue.bg)
+        } else {
+          const b: any = passives.value.find(it => it.id === id) ?? {}
+          if (b.name !== '[Auto] 追撃') list.push({...b, styleBGs: [currentValue.bg]})
+        }
+      }
     })
     return list
   }, []).sort((a, b) => a.name.split('').reverse().join('') < b.name.split('').reverse().join('') ? 1 : -1)

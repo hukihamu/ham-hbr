@@ -8,6 +8,7 @@ import Growth from '@/components/Growth.vue'
 import Stories from '@/components/Stories.vue'
 import Orb from '@/components/Orb.vue'
 import BonusPriority from '@/components/BonusPriority.vue'
+import Party from '@/components/Party.vue'
 
 const {userState} = storeToRefs(useStorageStore())
 </script>
@@ -19,6 +20,7 @@ const {userState} = storeToRefs(useStorageStore())
       <v-tabs v-model="userState.tab">
         <v-tab value="limit-break">凸状況</v-tab>
         <v-tab value="owned-styles">所持スタイル</v-tab>
+        <v-tab value="party">部隊編成</v-tab>
         <v-tab value="generalize">ジェネライズ</v-tab>
         <v-tab value="growth">宝珠</v-tab>
         <v-tab value="orb">オーブ</v-tab>
@@ -33,6 +35,9 @@ const {userState} = storeToRefs(useStorageStore())
         </v-window-item>
         <v-window-item value="owned-styles" class="mt-3">
           <OwnedStyles />
+        </v-window-item>
+        <v-window-item value="party" class="mt-3">
+          <Party />
         </v-window-item>
         <v-window-item value="generalize" class="mt-3">
           <Generalize />
